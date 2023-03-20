@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.graalvm.buildtools.native' version '0.9.11'
+}
+
+group 'org.postgresql'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.postgresql.HelloWorld'
+        )
+    }
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.graalvm.nativeimage/library-support
+    implementation group: 'org.graalvm.nativeimage', name: 'library-support', version: '22.3.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+graalvmNative {
+    useArgFile = false
+    binaries {
+        main {
+            mainClass = 'org.postgresql.HelloWorld'
+            useFatJar = true
+            verbose = true
+            buildArgs.add('-H:+ReportExceptionStackTraces')
+        }
+    }
+}

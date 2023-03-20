@@ -1,0 +1,5 @@
+# test_java extension
+comment = 'functions for verifying relation integrity'
+default_version = '1.0'
+module_pathname = '$libdir/test_java'
+relocatable = true
